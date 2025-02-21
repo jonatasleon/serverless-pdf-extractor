@@ -12,6 +12,6 @@ async def extract_text(file: UploadFile = File(...)):
         pdf_data = await file.read()
         doc = pymupdf.open(stream=pdf_data, filetype="pdf")
         text = "\n".join([page.get_text() for page in doc])
-        return {"filename": file.filename, "content": text}
+        return {"filename": file.filename, "content": text, "pages": len(doc)}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
